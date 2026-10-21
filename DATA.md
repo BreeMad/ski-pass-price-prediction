@@ -19,7 +19,7 @@ The notebook reads `resorts.csv` from its working folder, usually `/content` in 
 
 The prices are for one-day adult ski passes and are listed in euros.
 
-## How to download and use the data
+## How to Download and Use the Data
 
 1. Open the Maven Analytics link above and download the Ski Resorts dataset. You may need to sign in.
 2. Unzip the download and find `resorts.csv`.
