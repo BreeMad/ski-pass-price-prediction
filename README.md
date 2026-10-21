@@ -71,7 +71,9 @@ Colab runs the notebook in your browser, so you do not need to install or open J
 
 If a Python package is missing or does not work with the notebook, upload requirements.txt to Colab’s /content folder. Add a new code cell at the top of the notebook and run:
 
+```python
 %pip install -r requirements.txt
+```
 
 If Colab asks you to restart, do so, then run the notebook cells again from top to bottom. The suggested package versions still need to be checked together to confirm that the setup works.
 
