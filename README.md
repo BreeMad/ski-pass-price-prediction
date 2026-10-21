@@ -2,7 +2,7 @@
 
 I built and compared models to predict how much a one-day adult ski pass costs based on a resort’s slopes, location, season, and services.
 
-**Project type:** Regression | **Tools:** Python, Pandas, NumPy, statsmodels, SciPy, scikit-learn, Matplotlib, Seaborn
+**Project Type:** Regression | **Tools:** Python, Pandas, NumPy, statsmodels, SciPy, scikit-learn, Matplotlib, Seaborn
 
 ## Main Result
 
@@ -55,8 +55,8 @@ The model could be a starting point for estimating ski pass prices. More data ab
 
 ## Files
 
-- [Full notebook](ski_pass_price_prediction.ipynb): The project’s code, explanations, charts, and saved results.
-- [Data instructions](DATA.md): Where the data came from and which data file to download.
+- [Full Notebook](ski_pass_price_prediction.ipynb): The project’s code, explanations, charts, and saved results.
+- [Data Instructions](DATA.md): Where the data came from and which data file to download.
 - `requirements.txt`: A list of Python packages and suggested versions for running the project.
 - `images/`: The chart saved from the notebook is shown in this README.
 
