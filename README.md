@@ -1,72 +1,96 @@
 # Ski Pass Price Prediction
 
-I built and compared regression models to estimate the price of a one-day adult ski pass using a ski resort's slopes, location, season, and amenities. 
+I built and compared different regression models to predict the listed price of a one-day adult ski pass. I used information about each resort, such as its slopes, location, season, and services.
 
-**Project Type:** Regression
+**Project type:** Machine learning (regression)  
+**Tools:** Python, pandas, NumPy, scikit-learn, statsmodels, SciPy, Matplotlib, Seaborn, Google Colab
 
-**Tools:** Python, Pandas, NumPy, statsmodels, SciPy, scikit-learn, Matplotlib, Seaborn, Google Colab
+## Main Result
 
-## Main Result and Model Comparison
+**Lasso regression** was chosen because it had the lowest average prediction error during cross-validation on the training data. I then tested it on the **98 resorts set aside for final testing**.
 
-As shown in the table below, Ridge had the lowest average prediction error of **€9.29** for the **98 resorts used for testing**, which was only **€0.14 lower** than the categorical model’s.
+| Final test result | Value |
+|---|---:|
+| Average prediction error (MAE) | **€9.28** |
+| RMSE | €12.15 |
+| R² | 0.566 |
+| Baseline average error (MAE) | €14.19 |
 
-| Model | Test R-squared | Test MAE (€) | Test RMSE (€) |
-| --- | ---: | ---: | ---: |
-| Refined linear model | 0.230 | 11.580 | 16.189 |
-| Interaction model | 0.501 | 10.172 | 13.028 |
-| Categorical model | 0.559 | 9.423 | 12.250 |
-| **Ridge — selected model** | **0.568** | **9.287** | **12.131** |
-| Lasso | 0.560 | 9.377 | 12.232 |
+The Lasso model's predictions were off by about **€9.28 on average**. That was better than the simple baseline, which predicted the same average training price for every test resort and was off by **€14.19 on average**.
+
+## Model Comparison
+
+I compared six models using **five-fold cross-validation on the training data**. The model with the lowest average MAE was selected for final testing.
+
+| Model | Cross-validation MAE (€) |
+|---|---:|
+| **Lasso — selected model** | **8.83** |
+| Ridge | 8.84 |
+| Categorical model | 8.87 |
+| Interaction model | 8.97 |
+| Refined linear model | 11.18 |
+| Feature-engineered model | 12.62 |
+
+Lasso and Ridge had very similar results. Lasso was selected because its average prediction error was slightly lower. **The 98 test resorts were not used to choose the final model in this version.**
 
 ## Data Source
 
-The project uses `resorts.csv` from [Maven Analytics’ Ski Resorts Dataset](https://mavenanalytics.io/data-playground/ski-resorts). The separate snow-cover dataset is not used. See [DATA.md](DATA.md) for more information about the data and how to download it. 
+I used [`resorts.csv` from the Maven Analytics Ski Resorts dataset](https://mavenanalytics.io/data-playground/ski-resorts). The separate snow-cover dataset was not used. See [`DATA.md`](DATA.md) for download instructions.
 
-## Workflow
+The original file contained **499 resorts**. I removed **9 resorts with €0 pass prices**, leaving **490 resorts**: **392 for training** and **98 for final testing**.
 
-- Removed **9 resorts with questionable €0 prices**.
-- Examined pricing patterns, regression assumptions, prediction errors, and multicollinearity.
-- Tested combined features, the interaction between difficult slopes and North America, and categorical inputs to improve predictions.
-- Compared linear, Ridge, and Lasso regression with an **80/20 train-test split** and **five-fold cross-validation**. Scaled inputs and tuned Ridge and Lasso.
+## What I Did
 
-## Key Findings
+1. Cleaned the data and set aside 98 resorts for final testing.
+2. Looked at how ski pass prices were related to slopes, location, season, and resort services.
+3. Tested linear regression models, new features, Ridge, and Lasso.
+4. Used cross-validation to compare the models and find the best settings for Ridge and Lasso.
+5. Tested the chosen Lasso model on the 98 resorts and compared its results with the baseline.
 
-- Test MAE decreased from **€11.58** for the refined linear model to **€9.42** for the categorical model and **€9.29** for Ridge, although some prediction errors were still large.
+## Graphs and Findings
 
-- Overall, resorts with more difficult terrain tended to charge more; however, the relationship differed by continent.
+### Final Test Results
 
-![Ski pass prices and difficult terrain by continent](images/price_terrain_continent.png)
+![Actual vs. predicted ski pass prices and prediction errors](images/final_test_results.png)
 
-Each dot represents a ski resort, while each color stands for a different continent. The lines show the relationship between ski pass prices and difficult slopes for each continent, rather than final Ridge model predictions.
+The graph on the left compares actual prices with the model's predictions. The graph on the right shows where the model's predictions were too high or too low. Some of the more expensive resorts had larger prediction errors.
 
-## Possible Use and Limitations
+### Ski Pass Prices and Difficult Slopes by Continent
 
-- The model could give a starting price estimate for comparing resorts, but has not been tested in real pricing decisions and does not prove what causes higher prices. More data on visitor demand, snowfall, holidays, resort popularity, and competitors' prices could improve predictions.
+![Ski pass prices and difficult slopes by continent](images/price_terrain_continent.png)
 
-- Some feature choices used the full dataset, the final model was chosen using test results, and scaling was fitted before cross-validation. The reported scores are therefore not a fully independent estimate of performance on new resorts.
+Each dot represents a resort, and each color represents a continent. The lines show how difficult slopes and prices are related in the **training data**. They are **not** predictions from the final Lasso model.
 
-- In the future, I would choose features and models through cross-validation on training data, calculate scaling from each round’s training group, and test the final model on untouched data.
-  
+**Other findings:** Adding location, season, and resort services improved the average prediction error compared with the refined model that used only numerical features. The new numerical features on their own did not improve the results in that comparison.
+
+## Limitations and Next Steps
+
+The model can help compare ski pass prices, but it has not been tested for real pricing decisions. The results also do not prove what causes prices to change.
+
+The dataset does not include snowfall, holidays, visitor numbers, resort popularity, or prices at nearby resorts. These could be useful to study in the future.
+
+An earlier version of this project looked at the full dataset. In this revised version, the 98 test resorts were kept separate when choosing features and models. Still, **testing on completely new resorts or prices from another ski season would give a stronger check** of how accurate the model really is.
+
 ## Files
 
-- [Full Notebook](ski_pass_price_prediction.ipynb): Project code, explanations, charts, and saved results.
-- [Data Instructions](DATA.md): Where to download the data and which file to use.
-- `requirements.txt`: Required Python packages with suggested versions.
-- `images/`: The chart saved from the notebook and displayed in this README.
+- [`ski_pass_price_prediction.ipynb`](ski_pass_price_prediction.ipynb) — Full notebook with code, graphs, explanations, and results.
+- [`DATA.md`](DATA.md) — Where to get the dataset.
+- [`requirements.txt`](requirements.txt) — Python packages used for the project.
+- [`images/`](images/) — Graphs shown in this README.
 
 ## How to Run in Google Colab
 
-1. Open [Google Colab](https://colab.research.google.com/). Choose **File > Upload notebook** and select `ski_pass_price_prediction.ipynb`.
-2. Download `resorts.csv` by following the instructions in [DATA.md](DATA.md).
-3. In Colab’s **Files** panel, upload `resorts.csv` to `/content`. Keep the filename the same so the notebook can find it.
+1. Open `ski_pass_price_prediction.ipynb` in [Google Colab](https://colab.research.google.com/).
+2. Download `resorts.csv` using the instructions in `DATA.md`.
+3. Upload `resorts.csv` to Colab's **Files** panel. Keep the filename the same.
 4. Run the notebook cells from top to bottom.
 
-If a Python package is missing or does not work with the notebook, upload `requirements.txt` to Colab’s `/content` folder. Add a new code cell at the top of the notebook and run:
+If a package is missing or doesn't work with the notebook, upload `requirements.txt` to Colab and run this in a new code cell:
 
 ```python
 %pip install -r requirements.txt
 ```
 
-If Colab asks you to restart, do so, then run the notebook cells again from top to bottom. The suggested package versions still need to be checked together to confirm that the setup works.
+If Colab asks you to restart, restart it and run the cells again.
 
-You can also view the saved results on GitHub without downloading the data or running the notebook.
+You can also read the notebook and see its saved results on GitHub without running the code.
