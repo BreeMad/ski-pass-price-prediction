@@ -1,27 +1,36 @@
 # Data Instructions
 
-## Source
+## Data Source
 
-- **Dataset:** [Maven Analytics’ Ski Resorts Dataset](https://mavenanalytics.io/data-playground/ski-resorts).
-- **Original sources credited by Maven for the collection:** Ski-resort-stats.com and NASA Earth Observations.
-- **File used:** `resorts.csv`. The separate snow-cover dataset is not used.
+This project uses the [Ski Resorts Dataset from Maven Analytics](https://mavenanalytics.io/data-playground/ski-resorts).
+
+Maven Analytics lists Ski-resort-stats.com and NASA Earth Observations as sources for the dataset.
+
+I used the **`resorts.csv`** file. The separate snow-cover dataset was not used.
 
 ## Data Used in This Project
 
-The notebook starts with **499 ski resorts and 24 data column**s. Each ski resort’s `ID` is used as its row label.
+The original dataset contains **499 ski resorts and 24 columns**. Each resort has its own ID, which is used as its row label.
 
-The notebook reads `resorts.csv` from its working folder, usually `/content` in Google Colab. It uses these settings:
+The prices are listed in euros and are for **one-day adult ski passes**.
 
-- `encoding='latin-1'`: Allows the notebook to read special characters in the file.
-- `index_col='ID'`: Uses the ski resort IDs as row labels.
+I removed 9 resorts with €0 ski pass prices, leaving **490 resorts**. I used 392 resorts for training and set aside 98 for final testing.
 
-The prices are for one-day adult ski passes and are listed in euros.
+The notebook reads the CSV file using these settings:
+
+- **`encoding="latin-1"`:** Helps Python read special characters in the file.
+- **`index_col="ID"`:** Uses each resort's ID as its row label.
 
 ## How to Download and Use the Data
 
-1. Open the Maven Analytics link above and download the dataset. You may need to sign in.
-2. Unzip the download and find `resorts.csv`.
-3. Open `ski_pass_price_prediction.ipynb` in Google Colab. Use the **Files** panel to upload `resorts.csv` to the `/content` folder.
-4. Keep the filename the same and run the notebook cells from top to bottom. See the [README](README.md#how-to-run-in-google-colab) for package setup.
+1. Open the [Maven Analytics Ski Resorts Dataset](https://mavenanalytics.io/data-playground/ski-resorts) and download it. You may need to sign in.
+2. Unzip the downloaded folder and find **`resorts.csv`**.
+3. Open **`ski_pass_price_prediction.ipynb`** in Google Colab.
+4. Use Colab's **Files** panel to upload `resorts.csv` to the `/content` folder.
+5. Keep the filename the same and run the notebook cells from top to bottom.
 
-The CSV file is not included in this repository. Download resorts.csv from the Maven Analytics link above. If the dataset has been updated, your results may differ from the saved results.
+See the `README.md` file for help setting up the Python packages.
+
+**Note:** The CSV file is not included in this GitHub repository. You will need to download it from Maven Analytics.
+
+If the dataset changes in the future, your results may be different from the results saved in this project.
